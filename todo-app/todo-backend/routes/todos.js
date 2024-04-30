@@ -50,12 +50,7 @@ singleRouter.get("/", async (req, res) => {
 
 /* PUT todo. */
 singleRouter.put("/", async (req, res) => {
-  const newTodo = {
-    text: req.body.text,
-    done: false,
-  };
-
-  console.log(newTodo);
+  const newTodo = req.body;
 
   const updatedTodo = await Todo.findByIdAndUpdate(req.todo, newTodo, {
     new: true,

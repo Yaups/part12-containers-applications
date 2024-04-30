@@ -1,0 +1,19 @@
+### BUILD STAGE ###
+FROM node:20 AS build-stage
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm ci
+
+RUN npm run test
+
+ENV VITE_BACKEND_URL=http://192.168.0.3:3000/
+RUN npm run build
+
+### RUN STAGE ###
+
+FROM nginx:1.25-alpine
+
+COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
