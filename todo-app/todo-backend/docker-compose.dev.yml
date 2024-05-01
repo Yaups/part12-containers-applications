@@ -12,6 +12,7 @@ services:
     volumes:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - mongo_data:/data/db
+
   redis:
     image: redis
     ports:
@@ -19,6 +20,7 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
+
   server:
     image: containerised-todo-backend
     build:
