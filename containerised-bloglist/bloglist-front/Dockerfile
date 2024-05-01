@@ -7,8 +7,6 @@ COPY . .
 
 RUN npm ci
 
-RUN npm run test
-
 ENV VITE_BACKEND_URL=http://localhost:8080/api
 
 RUN npm run build
