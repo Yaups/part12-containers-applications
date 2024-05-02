@@ -41,19 +41,31 @@ const NavBar = () => {
             <Link className="navbar-item" to="/users">
               Users
             </Link>
+            {!user && (
+              <Link className="navbar-item" to="/login">
+                Log in
+              </Link>
+            )}
+            {!user && (
+              <Link className="navbar-item" to="/signup">
+                Sign Up
+              </Link>
+            )}
           </div>
 
           <div className="navbar-end">
             <div className="navbar-item">
-              <div className="buttons">
-                <i>Logged in as {user ? user.name : 'not logged in'} </i>
-                <button
-                  onClick={logout}
-                  className="button is-info is-light is-rounded"
-                >
-                  Log out
-                </button>
-              </div>
+              {user && (
+                <div className="buttons">
+                  <i>Logged in as {user ? user.name : 'not logged in'} </i>
+                  <button
+                    onClick={logout}
+                    className="button is-info is-light is-rounded"
+                  >
+                    Log out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

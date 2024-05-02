@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 const BlogList = () => {
   const blogs = useSelector(({ blogs }) => blogs)
+  const user = useSelector(({ user }) => user)
 
   const blogStyle = {
     paddingTop: 10,
@@ -14,10 +15,12 @@ const BlogList = () => {
   return (
     <div>
       <h2 className="title">Blogs</h2>
-      <Togglable buttonText="Open new blog form">
-        <h5 className="title is-5">Post a new blog:</h5>
-        <BlogForm />
-      </Togglable>
+      {user && (
+        <Togglable buttonText="Open new blog form">
+          <h5 className="title is-5">Post a new blog:</h5>
+          <BlogForm />
+        </Togglable>
+      )}
       <br />
       <div className="container">
         {blogs

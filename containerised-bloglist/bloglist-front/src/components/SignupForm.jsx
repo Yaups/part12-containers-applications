@@ -5,18 +5,25 @@ import { setUser } from '../reducers/userReducer'
 import { setNotification } from '../reducers/messageReducer'
 import { useNavigate } from 'react-router-dom'
 
-const LoginForm = () => {
+const SignupForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    const success = await performLogin(username, password)
+    const signupSuccess = await performSignup(username, password, name)
 
-    if (success) {
+    let loginSuccess
+    if (signupSuccess) {
+      loginSuccess = await performLogin(username, password)
+    }
+
+    if (loginSuccess) {
+      setName('')
       setUsername('')
       setPassword('')
 
@@ -46,11 +53,33 @@ const LoginForm = () => {
     }
   }
 
+  const performSignup = async (username, password) => {
+    try {
+      await axios.post('/api/users', { username, password, name })
+      return true
+    } catch {
+      dispatch(setNotification('Signup failed. :(', 5, true))
+      return false
+    }
+  }
+
   return (
     <div className="container is-max-desktop">
       <br />
-      <h2 className="title">Log in:</h2>
+      <h2 className="title">Sign up:</h2>
       <form className="form">
+        <div className="field">
+          <label className="label">Name</label>
+          <div className="control">
+            <input
+              type="text"
+              value={name}
+              onChange={({ target }) => setName(target.value)}
+              id="signup-name"
+              className="input"
+            />
+          </div>
+        </div>
         <div className="field">
           <label className="label">Username</label>
           <div className="control">
@@ -58,7 +87,7 @@ const LoginForm = () => {
               type="text"
               value={username}
               onChange={({ target }) => setUsername(target.value)}
-              id="login-username"
+              id="signup-username"
               className="input"
             />
           </div>
@@ -70,7 +99,7 @@ const LoginForm = () => {
               type="password"
               value={password}
               onChange={({ target }) => setPassword(target.value)}
-              id="login-password"
+              id="signup-password"
               className="input"
             />
           </div>
@@ -79,13 +108,13 @@ const LoginForm = () => {
           className="button"
           type="submit"
           onClick={handleSubmit}
-          id="login-button"
+          id="signup-button"
         >
-          Log in
+          Sign up
         </button>
       </form>
     </div>
   )
 }
 
-export default LoginForm
+export default SignupForm

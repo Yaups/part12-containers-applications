@@ -71,7 +71,7 @@ const Blog = ({ blog }) => {
         <br />
         Posted by {blog.user.name}.
         <br />
-        {blog.user.username === user.username && deleteButton()}
+        {user && blog.user.username === user.username && deleteButton()}
         <hr />
         <h3 className="title is-4">Comments on this blog:</h3>
         <ul style={listStyle}>

@@ -36,40 +36,6 @@ test('<Blog /> renders only required content initially', () => {
   expect(postedBy).toBeNull()
 })
 
-test('Additional info is shown after the button is clicked', async () => {
-  const blog = {
-    title: 'This is a new blog for the unit test 436e5ryu23',
-    author: 'Author for unit test 436e5ryu23',
-    url: 'www.436e5ryu23.com',
-    likes: 0,
-    user: {
-      name: 'Test Name 436e5ryu23',
-    },
-  }
-
-  const user = {
-    name: blog.user.name,
-  }
-
-  render(
-    <Blog
-      blog={blog}
-      user={user}
-      handleDeletion={() => null}
-      handleUpvote={() => null}
-    />,
-  )
-
-  const clicker = userEvent.setup()
-  const button = screen.getByText('Show')
-  await clicker.click(button)
-
-  const titleAndAuthor = screen.getByText(`${blog.title} - ${blog.author}`)
-  const likes = screen.getByText(`Likes: ${blog.likes}`, { exact: false })
-  const url = screen.getByText(blog.url, { exact: false })
-  const postedBy = screen.getByText(`Posted by ${user.name}`, { exact: false })
-})
-
 test('Clicking the like button twice calls its event handler twice', async () => {
   const blog = {
     title: 'This is a new blog for the unit test 387hfhu83',

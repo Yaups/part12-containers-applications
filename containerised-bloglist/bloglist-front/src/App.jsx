@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
 import Message from './components/Message'
 import LoginForm from './components/LoginForm'
+import SignupForm from './components/SignupForm'
 import BlogList from './components/BlogList'
 import Blog from './components/Blog'
 import UsersInfo from './components/UsersInfo'
 import UserInfo from './components/UserInfo'
 import NavBar from './components/NavBar'
-import Togglable from './components/Togglable'
 import { useDispatch, useSelector } from 'react-redux'
 import { initialiseBlogs } from './reducers/blogsReducer'
 import { setUser } from './reducers/userReducer'
 import { setUsers } from './reducers/usersReducer'
 import usersService from './services/users'
-import { Routes, Route, useMatch } from 'react-router-dom'
+import { Routes, Route, useMatch, Navigate } from 'react-router-dom'
 
 const App = () => {
   const user = useSelector(({ user }) => user)
@@ -55,10 +55,6 @@ const App = () => {
     <div className="container">
       <NavBar />
 
-      <Togglable buttonText="Log in">
-        <LoginForm />
-      </Togglable>
-
       <Message />
 
       <Routes>
@@ -70,6 +66,9 @@ const App = () => {
           element={<UserInfo matchingUser={matchingUser} />}
         />
         <Route path="/blogs/:id" element={<Blog blog={matchingBlog} />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   )
